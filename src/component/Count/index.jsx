@@ -3,35 +3,12 @@ import { connect } from 'react-redux';
 
 class Counter extends React.Component {
 
-    constructor(props) {
-        super(props)
-        this.state = { count: 0 };
-        //  this.onClickAdd = this.onClickAdd.bind(this);
-        // this.onClickReduce = this.onClickReduce.bind(this);
-    }
-
-    onClickAdd = () => {
-        //this.setState({count: this.state.count + 1});
-        this.props.increase();
-        this.setState((state, props) => {
-            return { count: state.count + 1 }
-        })
-    }
-
-    onClickReduce = () => {
-        // this.setState({ count: this.state.count - 1 });
-        this.props.decrease();
-        this.setState((state, props) => {
-            return { count: this.state.count - 1 }
-        })
-    }
-
     render() {
         return (
             <div>
-                <button onClick={this.onClickAdd}>+</button>
-                <span> {this.state.count} </span>
-                <button onClick={this.onClickReduce}>-</button>
+                <button onClick={this.props.onClickAdd} id={this.props.id}>+</button>
+                <span> {this.props.value} </span>
+                <button onClick={this.props.onClickReduce} id={this.props.id}>-</button>
             </div>
         )
     }
@@ -40,10 +17,17 @@ class Counter extends React.Component {
 
 const dispatchToprops = (dispatch) => {
     return {
-        inputChange(e) {
+        onClickAdd(e) {
             let action = {
                 type: "INCREMENT",
-                id:this.props.id
+                id: e.target.id
+            }
+            dispatch(action)
+        },
+        onClickReduce(e) {
+            let action = {
+                type: "DECREMENT",
+                id: e.target.id
             }
             dispatch(action)
         }

@@ -1,29 +1,52 @@
-import { render } from "react-dom"
-import { useDispatch } from "react-redux";
-
 let uuid = 0;
 const defaultState = {
     inputValue: 0,
     totalNum : 0,
     counters : []
-
 }
 
 export default (state = defaultState, action) => {
+    let newState = JSON.parse(JSON.stringify(state))
     switch (action.type) {
         case 'INCREMENT':
-            return state 
+            let newCounters = newState.counters.map(
+                function(item,idx) {
+                    if(item.id == action.id) {
+                        return {
+                            ...item,
+                            value: item.value+1
+                        }
+                    }else{
+                        return item;
+                    }
+                }
+            )
+            newState.counters = newCounters
+            newState.totalNum = newState.totalNum + 1;
+            return newState 
         case 'DECREMENT':
-            return state 
+            let newCounterss = newState.counters.map(
+                function(item,idx) {
+                    if(item.id == action.id) {
+                        return {
+                            ...item,
+                            value: item.value-1
+                        }
+                    }else{
+                        return item;
+                    }
+                }
+            )
+            newState.counters = newCounterss
+            newState.totalNum = newState.totalNum - 1;
+            return newState 
         case 'change_input':
-            let newState = JSON.parse(JSON.stringify(state))
                 newState.inputValue = action.value;
                 let countersSize = newState.counters.length
                 if(action.value > countersSize ) {
                     let counterObject;
                     for(let i = 0; i < action.value-countersSize; i++ ) {
                         ++uuid
-                        console.log(uuid)
                         counterObject = {
                             id: uuid,
                             value: 0
