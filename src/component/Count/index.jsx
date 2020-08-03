@@ -11,14 +11,20 @@ class Counter extends React.Component {
 
     onClickAdd = () =>{
         //this.setState({count: this.state.count + 1});
+        this.props.increase();
         this.setState( (state,props) => {
             return {count : state.count+1}
         })
         
     }
+    componentWillUnmount() {
+       
+        this.props.moveCounter(this.state.count)
+    }
 
     onClickReduce = () => {
         // this.setState({ count: this.state.count - 1 });
+        this.props.decrease();
        this.setState((state, props) => {
             return { count: this.state.count - 1 }
         }) 
