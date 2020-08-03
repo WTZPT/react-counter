@@ -1,27 +1,16 @@
 
 import React from 'react'
 import Counter from '../Count/index'
+import {connect} from 'react-redux';
 
-class counterList extends React.Component {
+class CounterList extends React.Component {
 
-
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = { counters: 0, total: 0 }
+        this.state = {counters:0}
+    
     }
 
-
-    increase = () => {
-        this.setState({
-            total: this.state.total + 1
-        })
-    }
-
-    decrease = () => {
-        this.setState({
-            total: this.state.total - 1
-        })
-    }
 
     inputChange = e => {
 
@@ -35,20 +24,43 @@ class counterList extends React.Component {
             total: this.state.total - value
         })
     }
-
+ 
     render() {
 
         return (
             <div>
-                <input type="number" name="" id="" value={this.state.counters} onChange={this.inputChange} />
-                {new Array(this.state.counters).fill(1).map((value, index) => (
-                    <Counter key={index} increase={this.increase} decrease={this.decrease} moveCounter={this.moveCounter} />
+                <input type="number" name="" id="" value={this.props.inputValue} onChange={this.props.inputChange} />
+                {new Array(this.state.counters).fill(0).map((value, index) => (
+                    <Counter key={index} increase={this.store.dispatch({ type: 'INCREMENT' })} decrease={this.store.dispatch({ type: 'DECREMENT' })} moveCounter={this.moveCounter} />
                 ))}
                 <hr />
-                <span>{this.state.total}</span>
+                <span>{this.props.totalNumber}</span>
             </div>
         )
     }
+
+  
 }
 
-export default counterList
+const stateToProps = (state)=> {
+    return {
+        totalNumber:state.totalNumber,
+        counters : state.counters,
+        inputValue : state.inputValue
+    }
+}
+
+const dispatchToprops = (dispatch) => {
+    return {
+        inputChange(e) {
+
+            let action = {
+                type : "change_input",
+                value : parseInt(e.target.value) > 0 ? parseInt(e.target.value) : 0 
+            }
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(stateToProps,dispatchToprops)(CounterList)

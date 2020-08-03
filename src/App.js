@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import CounterList from './component/GroupCounter/counterList'
+import CounterList from './component/GroupCounter/CounterList'
 function App() {
   return (
     <div className="App">
