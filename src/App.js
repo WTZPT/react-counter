@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import CounterList from './component/GroupCounter/CounterList'
+import CounterGroup from './component/CounterGroup'
 function App() {
   return (
     <div className="App">
        
       <header className="App-header">
         
-      <CounterList />
+      <CounterGroup />
        
       </header>
     </div>

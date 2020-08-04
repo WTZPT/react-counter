@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-
+import { generateIncreaseAction, generateDecreaseAction } from '../../actions/index'
 class Counter extends React.Component {
 
     render() {
@@ -18,20 +18,12 @@ class Counter extends React.Component {
 const dispatchToprops = (dispatch) => {
     return {
         onClickAdd(e) {
-            let action = {
-                type: "INCREMENT",
-                id: e.target.id
-            }
-            dispatch(action)
+            dispatch(generateIncreaseAction(e))
         },
         onClickReduce(e) {
-            let action = {
-                type: "DECREMENT",
-                id: e.target.id
-            }
-            dispatch(action)
+            dispatch(generateDecreaseAction(e))
         }
     }
 }
 
-export default connect(null,dispatchToprops)(Counter)
+export default connect(null, dispatchToprops)(Counter)
